@@ -71,8 +71,7 @@ class Status extends StatelessWidget {
                       ),
                       radius: 25.0,
                     ),
-                    Positioned(
-                      right: 0,
+                    Positioneright: 0,
                       bottom: -2,
                       child: CircleAvatar(
                         backgroundColor: Color(0xFF319FFC),
