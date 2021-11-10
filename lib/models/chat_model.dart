@@ -64,7 +64,7 @@ List<ChatModel> dummyChatsData = [
       "Dinner",
       "It's dinner time. Wooohooo. I can't wait to try the sushi at the restaurant.",
       "18/10/2021",
-      "https://scontent.fbki2-1.fna.fbcdn.net/v/t39.30808-6/246220903_4761643297248855_3589599963869201603_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=730e14&_nc_ohc=JZx_K7a8lZwAX9cSEsC&_nc_ht=scontent.fbki2-1.fna&oh=c5ffb32dc9ad7070a1969acf0690208b&oe=618A3823",
+      "https://i.imgur.com/dGJSYcO.jpeg",
       true,
       "999+"),
 ];
