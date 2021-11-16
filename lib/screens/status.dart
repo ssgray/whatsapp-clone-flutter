@@ -34,6 +34,8 @@ class Status extends StatelessWidget {
         onTap: () {},
       ),
       body: CustomScrollView(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           SliverToBoxAdapter(
             child: Padding(

@@ -2,8 +2,73 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
+
+  @override
+  State<Settings> createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings>
+    with SingleTickerProviderStateMixin {
+  final ScrollController controller = ScrollController();
+  bool titleVisibility = false;
+  bool listTitleVisibility = true;
+  late AnimationController colorController;
+  late Animation appBarColor;
+  Color appBarColorValue = Color(0xFF010101);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    controller.addListener(listenScrolling);
+    colorController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 0,
+      ),
+    );
+
+    appBarColor = ColorTween(
+      begin: Color(0xFF010101),
+      end: Color(0xFF121212),
+    ).animate(colorController);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    colorController.dispose();
+    super.dispose();
+  }
+
+  void listenScrolling() {
+    final scrollPosition = controller.offset;
+
+    colorController.animateTo(scrollPosition / 65);
+    setState(() {
+      appBarColorValue = appBarColor.value;
+    });
+
+    if (scrollPosition >= 28.0) {
+      if (titleVisibility != true && listTitleVisibility != false) {
+        setState(() {
+          titleVisibility = true;
+          listTitleVisibility = false;
+        });
+      }
+    } else if (titleVisibility == true && listTitleVisibility == false) {
+      setState(() {
+        titleVisibility = false;
+        listTitleVisibility = true;
+      });
+    }
+  }
+
+  void listenColorScroll() {}
 
   @override
   Widget build(BuildContext context) {
@@ -11,30 +76,59 @@ class Settings extends StatelessWidget {
       backgroundColor: Color(0xFF010101),
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color(0xFF010101),
-        title: Text(
-          'Settings',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.0,
+        backgroundColor: appBarColorValue,
+        title: Visibility(
+          visible: titleVisibility,
+          child: Text(
+            'Settings',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
           ),
         ),
       ),
       body: CustomScrollView(
+        controller: controller,
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         slivers: [
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: Text(
-                'Settings',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
+            child: SizedBox(),
+          ),
+          SliverAppBar(
+            backgroundColor: Color(0xFF010101),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding: const EdgeInsets.only(left: 15.0),
+                child: Visibility(
+                  visible: listTitleVisibility,
+                  child: Text(
+                    'Settings',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
+          // SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(left: 15.0),
+          //     child: Text(
+          //       'Settings',
+          //       style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 30.0,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(top: 10.0),
@@ -428,7 +522,12 @@ class Settings extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 100.0,
+            ),
+          ),
         ],
       ),
     );

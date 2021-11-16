@@ -99,6 +99,8 @@ class _CallsState extends State<Calls> {
         },
       ),
       body: CustomScrollView(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           SliverToBoxAdapter(
             child: Padding(

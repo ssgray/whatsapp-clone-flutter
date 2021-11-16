@@ -57,14 +57,14 @@ List<ChatModel> dummyChatsData = [
       "Lunch",
       "Let's get going. We are starving.",
       "19/10/2021",
-      "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-9/242053278_4516218115066169_8403954344845290014_n.jpg?_nc_cat=100&_nc_rgb565=1&ccb=1-5&_nc_sid=b9115d&_nc_ohc=zTZFiLAnflkAX9WC7vU&_nc_oc=AQk9WwMSCEh8p8-O1eU03t_oiNnurUDSurxs3KNyUACpHlzfIXiWdN9562_pIPH6pXPRuppdiS4Tz2YliyaKEHq2&_nc_ht=scontent.fbki2-1.fna&oh=6c52af57615dbf8e1cf96b0a24aa28d5&oe=61A2C429",
+      "https://scontent.fkul16-1.fna.fbcdn.net/v/t1.15752-9/p100x100/81768388_2433758846940336_7956456821697282048_n.png?_nc_cat=108&ccb=1-5&_nc_sid=4de414&_nc_ohc=YLTTOSTIhJoAX9msdrZ&_nc_ht=scontent.fkul16-1.fna&oh=0dd7f2ee33bd7bf008840b2b3bfb9c61&oe=61B74ECC",
       true,
       "777"),
   ChatModel(
       "Dinner",
       "It's dinner time. Wooohooo. I can't wait to try the sushi at the restaurant.",
       "18/10/2021",
-      "https://i.imgur.com/dGJSYcO.jpeg",
+      "https://scontent.fkul16-1.fna.fbcdn.net/v/t1.15752-9/p100x100/81768388_2433758846940336_7956456821697282048_n.png?_nc_cat=108&ccb=1-5&_nc_sid=4de414&_nc_ohc=YLTTOSTIhJoAX9msdrZ&_nc_ht=scontent.fkul16-1.fna&oh=0dd7f2ee33bd7bf008840b2b3bfb9c61&oe=61B74ECC",
       true,
       "999+"),
 ];
