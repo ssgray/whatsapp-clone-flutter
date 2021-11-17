@@ -53,7 +53,7 @@ class _SettingsState extends State<Settings>
       appBarColorValue = appBarColor.value;
     });
 
-    if (scrollPosition >= 28.0) {
+    if (scrollPosition >= 40.0) {
       if (titleVisibility != true && listTitleVisibility != false) {
         setState(() {
           titleVisibility = true;
@@ -76,14 +76,18 @@ class _SettingsState extends State<Settings>
       backgroundColor: Color(0xFF010101),
       appBar: AppBar(
         centerTitle: true,
+        toolbarHeight: 50.0,
         backgroundColor: appBarColorValue,
         title: Visibility(
           visible: titleVisibility,
-          child: Text(
-            'Settings',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Text(
+              'Settings',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
             ),
           ),
         ),
@@ -101,7 +105,7 @@ class _SettingsState extends State<Settings>
             backgroundColor: Color(0xFF010101),
             flexibleSpace: FlexibleSpaceBar(
               background: Padding(
-                padding: const EdgeInsets.only(left: 15.0),
+                padding: const EdgeInsets.only(left: 15.0, top: 12.0),
                 child: Visibility(
                   visible: listTitleVisibility,
                   child: Text(
@@ -130,40 +134,37 @@ class _SettingsState extends State<Settings>
           //   ),
           // ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: ListTile(
-                horizontalTitleGap: 12.0,
-                tileColor: Color(0xFF1C1C1E),
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-1/p200x200/60335881_2140310806016670_3747567555141697536_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=7206a8&_nc_ohc=Z1jKtjCCNgwAX_dmgT5&tn=wfPvW8tgETo93Trs&_nc_ht=scontent.fbki2-1.fna&oh=0165453776c5215d446d944fc6a80649&oe=61A2BD40",
-                  ),
-                  radius: 25.0,
+            child: ListTile(
+              horizontalTitleGap: 12.0,
+              tileColor: Color(0xFF1C1C1E),
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-1/p200x200/60335881_2140310806016670_3747567555141697536_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=7206a8&_nc_ohc=Z1jKtjCCNgwAX_dmgT5&tn=wfPvW8tgETo93Trs&_nc_ht=scontent.fbki2-1.fna&oh=0165453776c5215d446d944fc6a80649&oe=61A2BD40",
                 ),
-                title: Text(
-                  'Sean',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
+                radius: 25.0,
+              ),
+              title: Text(
+                'Sean',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
                 ),
-                subtitle: Text(
-                  'Fluttering',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15.0,
-                  ),
+              ),
+              subtitle: Text(
+                'Fluttering',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 15.0,
                 ),
-                trailing: CircleAvatar(
-                  radius: 17.0,
-                  backgroundColor: Color(0xFF2C2C2E),
-                  child: Icon(
-                    CupertinoIcons.qrcode,
-                    color: Color(0xFF319FFC),
-                    size: 20.0,
-                  ),
+              ),
+              trailing: CircleAvatar(
+                radius: 17.0,
+                backgroundColor: Color(0xFF2C2C2E),
+                child: Icon(
+                  CupertinoIcons.qrcode,
+                  color: Color(0xFF319FFC),
+                  size: 20.0,
                 ),
               ),
             ),

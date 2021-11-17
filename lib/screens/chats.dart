@@ -103,12 +103,15 @@ class _ChatsState extends State<Chats> {
             child: SizedBox(),
           ),
           SliverAppBar(
-            title: Text(
-              'Chats',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 6.0),
+              child: Text(
+                'Chats',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             backgroundColor: Color(0xFF010101),
