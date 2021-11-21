@@ -10,9 +10,46 @@ class Calls extends StatefulWidget {
   State<Calls> createState() => _CallsState();
 }
 
-class _CallsState extends State<Calls> {
+class _CallsState extends State<Calls> with SingleTickerProviderStateMixin {
   int _sliding = 0;
-  ScrollController controller = ScrollController();
+  final ScrollController controller = ScrollController();
+  Color appBarColorValue = Color(0xFF010101);
+  late AnimationController colorController;
+  late Animation appBarColor;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    controller.addListener(listenScrolling);
+    colorController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 0,
+      ),
+    );
+
+    appBarColor = ColorTween(
+      begin: Color(0xFF010101),
+      end: Color(0xFF121212),
+    ).animate(colorController);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  void listenScrolling() {
+    final scrollPosition = controller.offset;
+
+    colorController.animateTo(scrollPosition / 80);
+    setState(() {
+      appBarColorValue = appBarColor.value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +106,17 @@ class _CallsState extends State<Calls> {
               ],
             ),
           ),
-          backgroundColor: Color(0xFF010101),
+          backgroundColor: appBarColorValue,
           elevation: 0.0,
           leading: Center(
-            child: Text(
-              'Edit',
-              style: TextStyle(
-                color: Color(0xFF3175AE),
-                fontSize: 16.0,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0, top: 20.0),
+              child: Text(
+                'Edit',
+                style: TextStyle(
+                  color: Color(0xFF3175AE),
+                  fontSize: 16.0,
+                ),
               ),
             ),
           ),
@@ -103,8 +143,12 @@ class _CallsState extends State<Calls> {
             parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
+            child: SizedBox(),
+          ),
+          SliverAppBar(
+            centerTitle: false,
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 6.0),
               child: Text(
                 'Calls',
                 style: TextStyle(
@@ -114,12 +158,15 @@ class _CallsState extends State<Calls> {
                 ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-            sliver: SliverToBoxAdapter(
-              child: CupertinoSearchTextField(
-                backgroundColor: Color(0xFF1D1D1F),
+            backgroundColor: appBarColorValue,
+            expandedHeight: 100.0,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 15.0, top: 50.0, bottom: 15.0),
+                child: CupertinoSearchTextField(
+                  backgroundColor: Color(0xFF1D1D1F),
+                ),
               ),
             ),
           ),
@@ -133,7 +180,7 @@ class _CallsState extends State<Calls> {
                     leading: CircleAvatar(
                       backgroundImage:
                           NetworkImage(dummyCallsData[index].avatarUrl),
-                      radius: 18.0,
+                      // radius: 25.0,
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -142,7 +189,7 @@ class _CallsState extends State<Calls> {
                           dummyCallsData[index].time,
                           style: TextStyle(
                             color: Color(0xFF7C7B84),
-                            fontSize: 12.0,
+                            fontSize: 14.0,
                           ),
                         ),
                         SizedBox(
@@ -151,7 +198,7 @@ class _CallsState extends State<Calls> {
                         Icon(
                           Icons.info_outline,
                           color: Color(0xFF3175AE),
-                          size: 20.0,
+                          size: 24.0,
                         )
                       ],
                     ),
@@ -159,7 +206,7 @@ class _CallsState extends State<Calls> {
                       dummyCallsData[index].name,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 15.0,
+                        fontSize: 17.0,
                       ),
                     ),
                     subtitle: Row(
@@ -175,14 +222,15 @@ class _CallsState extends State<Calls> {
                         Text(
                           dummyCallsData[index].status,
                           style: TextStyle(
-                            fontSize: 12.0,
+                            fontSize: 14.0,
                             color: Color(0xFF7C7B84),
                           ),
                         )
                       ],
                     ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
-                    horizontalTitleGap: 8.0,
+                    horizontalTitleGap: 15.0,
+                    // minVerticalPadding: 8.0,
                     dense: true,
                     visualDensity: VisualDensity.compact,
                   ),
@@ -191,6 +239,7 @@ class _CallsState extends State<Calls> {
                     child: Divider(
                       height: 4.0,
                       color: Color(0xFF7C7B84),
+                      thickness: 0.2,
                     ),
                   ),
                 ],

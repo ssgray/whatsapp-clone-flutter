@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/bottom_navigation_icons_icons.dart';
@@ -8,19 +9,25 @@ import 'calls.dart';
 import 'camera.dart';
 
 class Navigation extends StatefulWidget {
+  static const String id = '/navigation';
   const Navigation({Key? key}) : super(key: key);
 
   @override
-  State<Navigation> createState() => _Chats();
+  State<Navigation> createState() => _Navigation();
 }
 
-class _Chats extends State<Navigation> with SingleTickerProviderStateMixin {
+class _Navigation extends State<Navigation>
+    with SingleTickerProviderStateMixin {
   int _selectedIndex = 3;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 2) {
+      Navigator.pushNamed(context, CameraScreen.id);
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
@@ -137,7 +144,9 @@ class _Chats extends State<Navigation> with SingleTickerProviderStateMixin {
         child: [
           Status(),
           Calls(),
-          Camera(),
+          CameraScreen(
+            cameras: [],
+          ),
           Chats(),
           Settings(),
         ].elementAt(_selectedIndex),

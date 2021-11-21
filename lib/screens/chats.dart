@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:whatsapp_clone/models/chat_model.dart';
 import 'package:whatsapp_clone/components/custom_appbar.dart';
 import '../chat_icons_icons.dart';
-import 'package:whatsapp_clone/components/my_behavior.dart';
 
 class Chats extends StatefulWidget {
   const Chats({Key? key}) : super(key: key);
@@ -13,15 +12,31 @@ class Chats extends StatefulWidget {
   State<Chats> createState() => _ChatsState();
 }
 
-class _ChatsState extends State<Chats> {
+class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
   // int index = 0;
   final ScrollController controller = ScrollController();
-  bool archivedOffstage = true;
+  bool titleVisibility = false;
+  Color appBarColorValue = Color(0xFF010101);
+  late AnimationController colorController;
+  late Animation appBarColor;
 
   void listenScrolling() {
-    if (controller.offset <= -30.0) {
+    final scrollPosition = controller.offset;
+
+    colorController.animateTo(scrollPosition / 100);
+    setState(() {
+      appBarColorValue = appBarColor.value;
+    });
+
+    if (scrollPosition >= 80.5) {
+      if (titleVisibility != true) {
+        setState(() {
+          titleVisibility = true;
+        });
+      }
+    } else if (titleVisibility != false) {
       setState(() {
-        archivedOffstage = false;
+        titleVisibility = false;
       });
     }
   }
@@ -29,15 +44,28 @@ class _ChatsState extends State<Chats> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     controller.addListener(listenScrolling);
+    colorController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 0,
+      ),
+    );
+
+    appBarColor = ColorTween(
+      begin: Color(0xFF010101),
+      end: Color(0xFF121212),
+    ).animate(colorController);
+
+    super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    controller.removeListener(listenScrolling);
+    colorController.dispose();
+    controller.dispose();
   }
 
   @override
@@ -48,14 +76,17 @@ class _ChatsState extends State<Chats> {
         appBar: AppBar(
           title: Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: Text('Chats'),
+            child: Visibility(
+              child: Text('Chats'),
+              visible: titleVisibility,
+            ),
           ),
           centerTitle: true,
-          backgroundColor: Color(0xFF010101),
+          backgroundColor: appBarColorValue,
           elevation: 0.0,
           leading: Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(left: 5.0, top: 20.0),
               child: Text(
                 'Edit',
                 style: TextStyle(color: Color(0xFF3175AE), fontSize: 16.0),
@@ -103,6 +134,7 @@ class _ChatsState extends State<Chats> {
             child: SizedBox(),
           ),
           SliverAppBar(
+            centerTitle: false,
             title: Padding(
               padding: const EdgeInsets.only(bottom: 6.0),
               child: Text(
@@ -114,7 +146,7 @@ class _ChatsState extends State<Chats> {
                 ),
               ),
             ),
-            backgroundColor: Color(0xFF010101),
+            backgroundColor: appBarColorValue,
             expandedHeight: 100.0,
             flexibleSpace: FlexibleSpaceBar(
               background: Padding(
@@ -179,12 +211,12 @@ class _ChatsState extends State<Chats> {
           //     ),
           //   ),
           // ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Row(
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  Row(
                     children: [
                       CircleAvatar(
                         child: Icon(
@@ -214,53 +246,51 @@ class _ChatsState extends State<Chats> {
                         ),
                       ),
                       SizedBox(
-                        width: 10.0,
+                        width: 5.0,
                       )
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Divider(
+                  Divider(
                     height: 8.0,
                     color: Color(0xFF7C7B84),
-                  ),
-                )
-              ],
+                    thickness: 0.2,
+                  )
+                ],
+              ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 5.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Broadcast Lists',
-                        style: TextStyle(
-                          color: Color(0xFF3C9EF6),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Broadcast Lists',
+                          style: TextStyle(
+                            color: Color(0xFF3C9EF6),
+                          ),
                         ),
-                      ),
-                      Text(
-                        'New Group',
-                        style: TextStyle(
-                          color: Color(0xFF3C9EF6),
+                        Text(
+                          'New Group',
+                          style: TextStyle(
+                            color: Color(0xFF3C9EF6),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Divider(
+                  Divider(
                     height: 8.0,
                     color: Color(0xFF7C7B84),
-                  ),
-                )
-              ],
+                    thickness: 0.2,
+                  )
+                ],
+              ),
             ),
           ),
           SliverFixedExtentList(
@@ -275,7 +305,7 @@ class _ChatsState extends State<Chats> {
                       backgroundColor: Colors.grey,
                       backgroundImage:
                           NetworkImage(dummyChatsData[index].avatarUrl),
-                      radius: 25.0,
+                      radius: 30.0,
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -284,15 +314,16 @@ class _ChatsState extends State<Chats> {
                         Text(
                           dummyChatsData[index].name,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17.0,
                             color: Color(0xFFE9E9E9),
                           ),
                         ),
                         Text(
                           dummyChatsData[index].time,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.0,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.0,
                             color: dummyChatsData[index].time.endsWith('M')
                                 ? Color(0xFF3C9EF6)
                                 : Color(0xFF79787B),
@@ -308,7 +339,7 @@ class _ChatsState extends State<Chats> {
                             padding: const EdgeInsets.only(right: 20.0),
                             child: Text(dummyChatsData[index].message,
                                 style: const TextStyle(
-                                  fontSize: 14.0,
+                                  fontSize: 15.0,
                                   color: Color(0xFF7C7B84),
                                 ),
                                 maxLines: 2,
@@ -319,7 +350,7 @@ class _ChatsState extends State<Chats> {
                           Icon(
                             CupertinoIcons.speaker_slash_fill,
                             color: Color(0xFF7C7B84),
-                            size: 15.0,
+                            size: 17.0,
                           ),
                         if (dummyChatsData[index].notificationNumber != "0")
                           Padding(
@@ -328,11 +359,11 @@ class _ChatsState extends State<Chats> {
                               borderRadius: BorderRadius.circular(10.0),
                               color: Color(0xFF3C9EF6),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5.0, vertical: 1.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
                                 child: Text(
                                   dummyChatsData[index].notificationNumber,
-                                  style: TextStyle(fontSize: 12.0),
+                                  style: TextStyle(fontSize: 14.0),
                                 ),
                               ),
                             ),
@@ -340,12 +371,12 @@ class _ChatsState extends State<Chats> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 83.0, right: 5),
-                    child: Divider(
-                      height: 8.0,
-                      color: Color(0xFF7C7B84),
-                    ),
+                  Divider(
+                    height: 0,
+                    color: Color(0xFF7C7B84),
+                    thickness: 0.2,
+                    indent: 83.0,
+                    endIndent: 5.0,
                   ),
                 ],
               );

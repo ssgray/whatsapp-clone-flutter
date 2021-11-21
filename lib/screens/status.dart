@@ -2,8 +2,67 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/components/custom_appbar.dart';
 
-class Status extends StatelessWidget {
+class Status extends StatefulWidget {
   const Status({Key? key}) : super(key: key);
+
+  @override
+  State<Status> createState() => _StatusState();
+}
+
+class _StatusState extends State<Status> with SingleTickerProviderStateMixin {
+  final ScrollController controller = ScrollController();
+  bool titleVisibility = false;
+  Color appBarColorValue = Color(0xFF010101);
+  late AnimationController colorController;
+  late Animation appBarColor;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    controller.addListener(listenScrolling);
+    colorController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 0,
+      ),
+    );
+
+    appBarColor = ColorTween(
+      begin: Color(0xFF010101),
+      end: Color(0xFF121212),
+    ).animate(colorController);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+    colorController.dispose();
+  }
+
+  void listenScrolling() {
+    final scrollPosition = controller.offset;
+
+    colorController.animateTo(scrollPosition / 80);
+    setState(() {
+      appBarColorValue = appBarColor.value;
+    });
+
+    if (scrollPosition >= 80) {
+      if (titleVisibility != true) {
+        setState(() {
+          titleVisibility = true;
+        });
+      }
+    } else if (titleVisibility != false) {
+      setState(() {
+        titleVisibility = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,50 +70,67 @@ class Status extends StatelessWidget {
       backgroundColor: Color(0xFF010101),
       appBar: CustomAppBar(
         appBar: AppBar(
-          leadingWidth: 75.0,
+          leadingWidth: 80.0,
           centerTitle: true,
-          backgroundColor: Color(0xFF010101),
+          backgroundColor: appBarColorValue,
           leading: TextButton(
             onPressed: () {},
-            child: Text(
-              'Privacy',
-              style: TextStyle(
-                color: Color(0xFF3175AE),
-                fontSize: 16.0,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0, top: 20.0),
+              child: Text(
+                'Privacy',
+                style: TextStyle(
+                  color: Color(0xFF3175AE),
+                  fontSize: 16.0,
+                ),
               ),
             ),
           ),
-          title: Text(
-            'Status',
-            style: TextStyle(
-              fontSize: 16.0,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Visibility(
+              visible: titleVisibility,
+              child: Text(
+                'Status',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
             ),
           ),
         ),
         onTap: () {},
       ),
       body: CustomScrollView(
+        controller: controller,
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
+            child: SizedBox(),
+          ),
+          SliverAppBar(
+            centerTitle: false,
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 6.0),
               child: Text(
                 'Status',
                 style: TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.bold,
                   fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-            sliver: SliverToBoxAdapter(
-              child: CupertinoSearchTextField(
-                backgroundColor: Color(0xFF1D1D1F),
+            backgroundColor: appBarColorValue,
+            expandedHeight: 100.0,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 15.0, top: 50.0, bottom: 15.0),
+                child: CupertinoSearchTextField(
+                  backgroundColor: Color(0xFF1D1D1F),
+                ),
               ),
             ),
           ),
