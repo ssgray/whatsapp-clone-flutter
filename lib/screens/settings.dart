@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:whatsapp_clone/components/custom_appbar.dart';
+
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
@@ -74,23 +76,29 @@ class _SettingsState extends State<Settings>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF010101),
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 50.0,
-        backgroundColor: appBarColorValue,
-        title: Visibility(
-          visible: titleVisibility,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Text(
-              'Settings',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
+      appBar: CustomAppBar(
+        appBar: AppBar(
+          centerTitle: true,
+          toolbarHeight: 50.0,
+          backgroundColor: appBarColorValue,
+          title: Visibility(
+            visible: titleVisibility,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Text(
+                'Settings',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                ),
               ),
             ),
           ),
         ),
+        onTap: () {
+          controller.animateTo(0,
+              duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+        },
       ),
       body: CustomScrollView(
         controller: controller,

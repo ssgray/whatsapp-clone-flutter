@@ -139,6 +139,7 @@ class _CallsState extends State<Calls> with SingleTickerProviderStateMixin {
         },
       ),
       body: CustomScrollView(
+        controller: controller,
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
         slivers: [
