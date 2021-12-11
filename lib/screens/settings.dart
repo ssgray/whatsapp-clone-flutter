@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:whatsapp_clone/components/custom_appbar.dart';
+import 'package:whatsapp_clone/screens/profileupdate.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -116,12 +117,19 @@ class _SettingsState extends State<Settings>
                 padding: const EdgeInsets.only(left: 15.0, top: 12.0),
                 child: Visibility(
                   visible: listTitleVisibility,
-                  child: Text(
-                    'Settings',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
+                  child: Hero(
+                    tag: 'settings',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Text(
+                        'Settings',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -147,7 +155,7 @@ class _SettingsState extends State<Settings>
               tileColor: Color(0xFF1C1C1E),
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-1/p200x200/60335881_2140310806016670_3747567555141697536_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=7206a8&_nc_ohc=Z1jKtjCCNgwAX_dmgT5&tn=wfPvW8tgETo93Trs&_nc_ht=scontent.fbki2-1.fna&oh=0165453776c5215d446d944fc6a80649&oe=61A2BD40",
+                  "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-1/p480x480/60335881_2140310806016670_3747567555141697536_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=7206a8&_nc_ohc=Eb7Oe6Vgm94AX9hiQ7a&_nc_ht=scontent.fbki2-1.fna&oh=74933fd0903f6489dcbbf255d234f605&oe=61C82AD4",
                 ),
                 radius: 25.0,
               ),
@@ -175,6 +183,9 @@ class _SettingsState extends State<Settings>
                   size: 20.0,
                 ),
               ),
+              onTap: () {
+                Navigator.pushNamed(context, ProfileUpdateScreen.id);
+              },
             ),
           ),
           SliverPadding(
@@ -187,6 +198,9 @@ class _SettingsState extends State<Settings>
                       minLeadingWidth: 10.0,
                       visualDensity: VisualDensity.compact,
                       tileColor: Color(0xFF1C1C1E),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/starred');
+                      },
                       leading: Container(
                         decoration: BoxDecoration(
                           color: Color(0xFFFFC500),

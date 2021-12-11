@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:whatsapp_clone/models/chat_model.dart';
 import 'package:whatsapp_clone/components/custom_appbar.dart';
+import 'package:whatsapp_clone/models/message_arguments.dart';
+import 'package:whatsapp_clone/screens/chatsearch.dart';
+import 'package:whatsapp_clone/screens/message.dart';
 import '../chat_icons_icons.dart';
 
 class Chats extends StatefulWidget {
@@ -19,6 +22,7 @@ class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
   Color appBarColorValue = Color(0xFF010101);
   late AnimationController colorController;
   late Animation appBarColor;
+  FocusNode focus = FocusNode();
 
   void listenScrolling() {
     final scrollPosition = controller.offset;
@@ -44,6 +48,7 @@ class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     // TODO: implement initState
+    // Animation
     controller.addListener(listenScrolling);
     colorController = AnimationController(
       vsync: this,
@@ -66,6 +71,8 @@ class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
     super.dispose();
     colorController.dispose();
     controller.dispose();
+
+    focus.dispose();
   }
 
   @override
@@ -152,8 +159,21 @@ class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
               background: Padding(
                 padding: const EdgeInsets.only(
                     left: 15.0, right: 15.0, top: 50.0, bottom: 15.0),
-                child: CupertinoSearchTextField(
-                  backgroundColor: Color(0xFF1D1D1F),
+                child: Hero(
+                  tag: 'chatsearch',
+                  child: GestureDetector(
+                    child: CupertinoTheme(
+                      data: CupertinoThemeData(brightness: Brightness.dark),
+                      child: CupertinoSearchTextField(
+                        focusNode: focus,
+                        backgroundColor: Color(0xFF1D1D1F),
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          Navigator.pushNamed(context, '/chatsearch');
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -300,6 +320,14 @@ class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
               return Column(
                 children: [
                   ListTile(
+                    onTap: () {
+                      Navigator.pushNamed(context, MessageScreen.id,
+                          arguments: MessageArguments(
+                              dummyChatsData[index].message,
+                              dummyChatsData[index].name,
+                              dummyChatsData[index].avatarUrl,
+                              dummyChatsData[index].time));
+                    },
                     leading: CircleAvatar(
                       foregroundColor: Theme.of(context).primaryColor,
                       backgroundColor: Colors.grey,

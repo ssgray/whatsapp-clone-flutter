@@ -15,14 +15,14 @@ List<ChatModel> dummyChatsData = [
       "Sean Gray",
       "This is a clone of the WhatsApp app. Do let me know what you think. If you like it, please give me star.",
       "8:30 AM",
-      "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-1/p200x200/60335881_2140310806016670_3747567555141697536_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=7206a8&_nc_ohc=Z1jKtjCCNgwAX_dmgT5&tn=wfPvW8tgETo93Trs&_nc_ht=scontent.fbki2-1.fna&oh=0165453776c5215d446d944fc6a80649&oe=61A2BD40",
+      "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-1/p480x480/60335881_2140310806016670_3747567555141697536_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=7206a8&_nc_ohc=Eb7Oe6Vgm94AX9hiQ7a&_nc_ht=scontent.fbki2-1.fna&oh=74933fd0903f6489dcbbf255d234f605&oe=61C82AD4",
       false,
       "12"),
   ChatModel(
       "Julia",
       "Good morning.",
       "Yesterday",
-      "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-1/p200x200/246623736_4675990345797636_8727313342613173353_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=7206a8&_nc_ohc=x1NwWLYyrOoAX8cbLnd&_nc_ht=scontent.fbki2-1.fna&oh=ed41dc36712f5fa1f2823389e0aaed4d&oe=61A32573",
+      "https://scontent.fbki2-1.fna.fbcdn.net/v/t39.30808-1/p480x480/241461495_4675990335797637_2638867654219391877_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=7206a8&_nc_ohc=Ef73PRmKSz4AX--rMOA&_nc_ht=scontent.fbki2-1.fna&oh=dfe0f1575d5eadcfe7ad0471bee10a87&oe=61A83116",
       false,
       "5"),
   ChatModel(

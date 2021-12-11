@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/assets/constants.dart';
 import 'package:whatsapp_clone/components/custom_appbar.dart';
+import 'package:whatsapp_clone/models/chat_model.dart';
 
 class Status extends StatefulWidget {
   const Status({Key? key}) : super(key: key);
@@ -73,6 +75,7 @@ class _StatusState extends State<Status> with SingleTickerProviderStateMixin {
           leadingWidth: 80.0,
           centerTitle: true,
           backgroundColor: appBarColorValue,
+          elevation: 0,
           leading: TextButton(
             onPressed: () {},
             child: Padding(
@@ -80,7 +83,7 @@ class _StatusState extends State<Status> with SingleTickerProviderStateMixin {
               child: Text(
                 'Privacy',
                 style: TextStyle(
-                  color: Color(0xFF3175AE),
+                  color: kLightBlue,
                   fontSize: 16.0,
                 ),
               ),
@@ -144,9 +147,8 @@ class _StatusState extends State<Status> with SingleTickerProviderStateMixin {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-1/p200x200/60335881_2140310806016670_3747567555141697536_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=7206a8&_nc_ohc=Z1jKtjCCNgwAX_dmgT5&tn=wfPvW8tgETo93Trs&_nc_ht=scontent.fbki2-1.fna&oh=0165453776c5215d446d944fc6a80649&oe=61A2BD40",
-                      ),
+                      backgroundImage:
+                          NetworkImage(dummyChatsData[0].avatarUrl),
                       radius: 25.0,
                     ),
                     Positioned(
