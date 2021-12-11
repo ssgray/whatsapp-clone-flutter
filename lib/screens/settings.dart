@@ -527,17 +527,18 @@ class _SettingsState extends State<Settings>
                         'from',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 10.0,
+                          fontSize: 12.0,
                         ),
                       ),
                       SizedBox(
                         height: 5.0,
                       ),
                       Text(
-                        'F L U T T E R',
+                        'FLUTTER',
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
+                          letterSpacing: 3.0,
                         ),
                       ),
                     ],

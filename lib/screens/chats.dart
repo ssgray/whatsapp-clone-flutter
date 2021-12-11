@@ -22,7 +22,6 @@ class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
   Color appBarColorValue = Color(0xFF010101);
   late AnimationController colorController;
   late Animation appBarColor;
-  FocusNode focus = FocusNode();
 
   void listenScrolling() {
     final scrollPosition = controller.offset;
@@ -71,8 +70,13 @@ class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
     super.dispose();
     colorController.dispose();
     controller.dispose();
+  }
 
-    focus.dispose();
+  void removeFocus(BuildContext context) {
+    FocusScopeNode _currentFocus = FocusScope.of(context);
+    if (!_currentFocus.hasPrimaryFocus && _currentFocus.focusedChild != null) {
+      _currentFocus.focusedChild!.unfocus();
+    }
   }
 
   @override
@@ -161,18 +165,21 @@ class _ChatsState extends State<Chats> with SingleTickerProviderStateMixin {
                     left: 15.0, right: 15.0, top: 50.0, bottom: 15.0),
                 child: Hero(
                   tag: 'chatsearch',
-                  child: GestureDetector(
-                    child: CupertinoTheme(
-                      data: CupertinoThemeData(brightness: Brightness.dark),
-                      child: CupertinoSearchTextField(
-                        focusNode: focus,
+                  child: CupertinoTheme(
+                    data: CupertinoThemeData(brightness: Brightness.dark),
+                    child: Stack(children: [
+                      CupertinoSearchTextField(
                         backgroundColor: Color(0xFF1D1D1F),
+                      ),
+                      GestureDetector(
+                        child: Container(
+                          color: Colors.transparent,
+                        ),
                         onTap: () {
-                          FocusScope.of(context).unfocus();
                           Navigator.pushNamed(context, '/chatsearch');
                         },
                       ),
-                    ),
+                    ]),
                   ),
                 ),
               ),

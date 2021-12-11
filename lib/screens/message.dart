@@ -155,16 +155,18 @@ class MessageScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: 10.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3.0),
-                    child: Icon(
-                      CupertinoIcons.add,
-                      color: kLightBlue,
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Icon(
+                        CupertinoIcons.add,
+                        color: kLightBlue,
+                      ),
                     ),
                   ),
                   SizedBox(
